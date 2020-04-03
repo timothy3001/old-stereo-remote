@@ -65,9 +65,7 @@ def bash_is_audio_playing():
     proc = subprocess.Popen(cmd, stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
 
-    print("starting")
     o, e = proc.communicate(timeout=5)
-    print("done")
 
     output = o.decode('ascii').strip()
     error = e.decode('ascii').strip()
