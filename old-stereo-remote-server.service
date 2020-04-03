@@ -1,0 +1,19 @@
+
+[Unit]
+Description=Old stereo remote server
+After=syslog.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+WorkingDirectory=/etc/old-stereo-remote/
+ExecStart=/etc/old-stereo-remote/venv/bin/python /etc/old-stereo-remote/main.py
+SyslogIdentifier=old-stereo-remote-server
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+RestartSec=60
+
+[Install]
+WantedBy=multi-user.target
