@@ -35,16 +35,24 @@ class OldRemoteHandler(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         if self.path == "/volumeUp":
+            print("HTTP: Turning volume up...")
             execute_bash(SCRIPT_VOLUME_UP)
+            print("HTTP: Volume turned up!")
             self.send_ok()
         if self.path == "/volumeDown":
+            print("HTTP: Turning volume down...")
             execute_bash(SCRIPT_VOLUME_DOWN)
+            print("HTTP: Volume turned down!")
             self.send_ok()
         if self.path == "/powerOn":
+            print("HTTP: Turning stereo on...")
             execute_bash(SCRIPT_ON)
+            print("HTTP: Stereo turned on!")
             self.send_ok()
         if self.path == "/powerOff":
+            print("HTTP: Turning stereo off...")
             execute_bash(SCRIPT_OFF)
+            print("HTTP: Stereo turned off!")
             self.send_ok()
         else:
             self.send_response(404)
@@ -81,16 +89,22 @@ def check_is_playing():
         result = bash_is_audio_playing()
 
         if result and not currently_playing:
+            print("Turning stereo on...")
             execute_bash(SCRIPT_ON)
             currently_playing = True
             last_playing_stop = None
+            print("Stereo turned on!")
         elif not result and currently_playing:
+            print("Playback stopping...")
             currently_playing = False
             last_playing_stop = datetime.now()
+            print(f"Playback stopped at {last_playing_stop}!")
         elif not currently_playing and last_playing_stop:
             delta = datetime.now() - last_playing_stop
             if delta.total_seconds() > TIMEOUT_POWEROFF_SECONDS:
+                print("Turning stereo off...")
                 execute_bash(SCRIPT_OFF)
+                print("Stereo turned off!")
 
     except e as Exception:
         print('Could not check for playing state!')
