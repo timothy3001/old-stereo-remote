@@ -35,6 +35,10 @@ class OldRemoteHandler(http.server.BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
+    def log_message(self, format, *args):
+        # Disabling annoying log messages
+        return
+
     def do_POST(self):
         try:
             if self.path == "/volumeUp":
