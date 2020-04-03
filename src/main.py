@@ -92,8 +92,8 @@ def check_is_playing():
             else:
                 print("Turning stereo on...")
                 execute_bash(SCRIPT_ON)
-                currently_playing = True
                 print("Stereo turned on!")
+            currently_playing = True
             last_playing_stop = None
         elif not result and currently_playing:
             print("Playback stopping...")
