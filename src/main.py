@@ -87,11 +87,14 @@ def check_is_playing():
         result = bash_is_audio_playing()
 
         if result and not currently_playing:
-            print("Turning stereo on...")
-            execute_bash(SCRIPT_ON)
-            currently_playing = True
+            if last_playing_stop:
+                print("Resumed playback...")
+            else:
+                print("Turning stereo on...")
+                execute_bash(SCRIPT_ON)
+                currently_playing = True
+                print("Stereo turned on!")
             last_playing_stop = None
-            print("Stereo turned on!")
         elif not result and currently_playing:
             print("Playback stopping...")
             currently_playing = False
@@ -102,6 +105,7 @@ def check_is_playing():
             if delta.total_seconds() > TIMEOUT_POWEROFF_SECONDS:
                 print("Turning stereo off...")
                 execute_bash(SCRIPT_OFF)
+                last_playing_stop = None
                 print("Stereo turned off!")
 
     except e as Exception:
